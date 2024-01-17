@@ -1,0 +1,10 @@
+<svg version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="200" viewBox="0 0 800 200">
+  <text text-anchor="end" x="100" y="100" font-size="20px" font-family="Verdana" fill="black">
+    スイッチ
+  </text>
+  <path id="Graph"
+  fill="none" stroke="silver"
+  d="M120,110 l50,0 l0,-30" />
+</svg>

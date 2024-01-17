@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<svg width="200" height="250" version="1.1"
+  xmlns="http://www.w3.org/2000/svg">
+
+  <text x="10" y="50">Hello World!</text>
+  <text x="10" y="100">
+    <tspan font-weight="bold" fill="red">This is bold and red</tspan>
+  </text>
+
+  <!-- <text x="10" y="150" id="example">This is an example text.</text>
+
+  <text>
+    <tref xlink:href="#example" />
+  </text> -->
+
+  <path id="my_path" d="M 20,20 C 40,40 80,40 100,20" />
+  <text>
+    <textPath xlink:href="#my_path">This text follows a curve.</textPath>
+  </text>
+</svg>
