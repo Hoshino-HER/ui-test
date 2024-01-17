@@ -1,13 +1,8 @@
-import Image from 'next/image'
+import { MyD3Component } from "./d3_sample"
 
 export default function Home() {
   return (
-    <Image
-      src="/test.svg"
-      alt="SVG sample"
-      width={800}
-      height={200}
-      priority
+    <MyD3Component data={[1,2,3]}
     />
   )
 }
