@@ -11,10 +11,16 @@ type D3Selection = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 
 function barGraph(root: D3Selection, data: number[]) {
 
+  const old = root.select("svg");
+  old.remove();
+
+  const width = 400;
+  const height = 100;
+
   const svg = root.append("svg")
-    .attr("width", 50)
-    .attr("height", 50)
-    .attr("viewBox", [0, 0, 50, 50]);
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, 100, 100]);
 
   svg
     .append("circle")
