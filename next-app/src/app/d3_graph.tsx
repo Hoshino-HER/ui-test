@@ -9,9 +9,9 @@ interface IProps {
 
 type D3Selection = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 
-function barGraph(root: D3Selection, dataset: number[]) {
+function barGraph(root: D3Selection, dataset: Array<number>) {
 
-  const maxnum = d3.max(dataset) as number;
+  const maxnum = d3.max(dataset);
   if (maxnum === undefined) {
     return;
   }
@@ -22,6 +22,7 @@ function barGraph(root: D3Selection, dataset: number[]) {
   const width = 400;
   const height = 100;
   const barPadding = 1;
+  const margin = { top: 8, right: 8, bottom: 8, left: 8 };
 
   const svg = root.append("svg")
     .attr("width", width)
@@ -41,18 +42,46 @@ function barGraph(root: D3Selection, dataset: number[]) {
     .join('rect')
     .attr("class", "bar");
 
+  // スケール設定
+  const yScale = d3
+    .scaleLinear()
+    .domain([0, maxnum])
+    .range([height - margin.bottom, margin.top]);
+  const xScale = d3
+    .scaleBand()
+    .domain(dataset)
+    .range([margin.left, width - margin.right])
+    .padding(0.1);
+
   rects
-    .attr('x', (d, i) => i * (width / dataset.length))
-    .attr('y', (d) => height - (d / maxnum) * height)
-    .attr('width', width / dataset.length - barPadding)
-    .attr('height', (d) => (d / maxnum) * height)
-    .attr('fill', (d) => `hsl(220, 50%, ${60 - (d / maxnum) * 40}%)`)
+    .attr('x', xScale)
+    .attr('y', yScale)
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => yScale(0) - yScale(d))
+    .attr('fill', d => `hsl(220, 50%, ${60 - (d / maxnum) * 40}%)`)
     .on("mouseenter", function (event) {
       d3.select(this).attr("fill", "yellow");
     })
     .on("mouseleave", function (event) {
-      d3.select(this).attr("fill", "#800");
+      d3.select(this).attr("fill", (d) => `hsl(220, 50%, ${60 - (d / maxnum) * 40}%)`);
     });
+
+  svg
+    .selectAll('text')
+    .data(dataset)
+    .join('text')
+    .attr(
+      'x',
+      (d) =>
+        xScale(d) + xScale.bandwidth() / 2
+    )
+    .attr('y', (d) => yScale(d) + 13)
+    .attr('font-family', 'sans-serif')
+    .attr('font-size', 11)
+    .attr('font-weight', 'bold')
+    .attr('fill', 'white')
+    .attr('text-anchor', 'middle')
+    .text(d => d);
 
   svg
     .append("circle")
