@@ -46,7 +46,7 @@ function barGraph(root: D3Selection, dataset: number[]) {
     .attr('y', (d) => height - (d / maxnum) * height)
     .attr('width', width / dataset.length - barPadding)
     .attr('height', (d) => (d / maxnum) * height)
-    .attr('fill', '#800')
+    .attr('fill', (d) => `hsl(220, 50%, ${60 - (d / maxnum) * 40}%)`)
     .on("mouseenter", function (event) {
       d3.select(this).attr("fill", "yellow");
     })
