@@ -42,7 +42,7 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     .range([height - margin.bottom, margin.top]);
   const xScale = d3
     .scaleBand()
-    .domain(dataset)
+    .domain(dataset.map((d, i) => d.toString()))
     .range([margin.left, width - margin.right])
     .padding(0.1);
 
@@ -65,7 +65,9 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     .attr("class", "bar")
 
   rects
-    .attr('x', xScale)
+    .attr('x',
+      (d) => xScale(d.toString()) ?? 0
+    )
     .attr('y', yScale)
     .attr('width', xScale.bandwidth())
     .attr('height', d => yScale(0) - yScale(d))
@@ -73,8 +75,12 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     .on("mouseenter", function (event) {
       d3.select(this).attr("fill", "yellow");
     })
-    .on("mouseleave", function (event) {
-      d3.select(this).attr("fill", (d) => `hsl(220, 50%, ${60 - (d / maxnum) * 40}%)`);
+    .on("mouseleave", (event, d: number) => {
+      d3.select(event.currentTarget)
+        .attr(
+          "fill",
+          `hsl(220, 50%, ${60 - (d / maxnum) * 40}%)`
+        );
     });
 
   svg
@@ -95,7 +101,7 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     .attr(
       'x',
       (d) =>
-        xScale(d) + xScale.bandwidth() / 2
+        (xScale(d.toString()) ?? 0) + xScale.bandwidth() / 2
     )
     .attr('y', (d) => yScale(d) + 13)
     .attr('font-family', 'sans-serif')
