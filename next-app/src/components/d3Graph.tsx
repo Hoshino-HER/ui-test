@@ -2,7 +2,8 @@
 
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-import { barGraph } from '@/utils/d3Bar';
+// import { barGraph } from '@/utils/d3Bar';
+import { scatterGraph } from '@/utils/d3Scatter';
 
 interface IProps {
   data?: number[];
@@ -12,14 +13,19 @@ interface IProps {
 export const MyD3Graph = (props: IProps) => {
   const d3Container = useRef(null);
 
-  useEffect(
-    () => {
+  useEffect( () => {
+    const data = async () => {
       if (d3Container.current) {
-        const dataset = d3.shuffle(d3.range(40, 200, 10));
         const root = d3.select(d3Container.current);
-        barGraph(root, dataset);
+
+        const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRgABhzZkXwZihskMCzNWKcL5lqRwyHRF-bygd7uxZ1rq7DbgcZXpSLClyh9FPJlw_JroNhDK73QUq-/pub?gid=0&single=true&output=tsv";
+        const dataset = await d3.tsv(url, d3.autoType)
+
+        scatterGraph(root, dataset);
       }
-    },
+    }
+    data();
+  },
 
     [props.data, d3Container.current])
 
