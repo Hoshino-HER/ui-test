@@ -5,18 +5,15 @@ interface IScatterData {
   id?: string;
   x: number;
   y: number;
+  z: number;
 }
 type DSVArray = d3.DSVParsedArray<IScatterData>;
 
 export function scatterGraph(root: D3Selection, dataset: DSVArray) {
-  const maxX = d3.max(dataset, d => d.x);
-  const minX = d3.min(dataset, d => d.x);
-  const maxY = d3.max(dataset, d => d.y);
-  const minY = d3.min(dataset, d => d.y);
-  if (
-    maxX === undefined || maxY === undefined
-    || minX === undefined || minY === undefined
-  ) {
+  const [minX, maxX] = d3.extent(dataset, d => d.x);
+  const [minY, maxY] = d3.extent(dataset, d => d.y);
+  const [minZ, maxZ] = d3.extent(dataset, d => d.z);
+  if ([minX, maxX, minY, maxY, minZ, maxZ].some(d => d === undefined)) {
     return;
   }
 
@@ -30,7 +27,8 @@ export function scatterGraph(root: D3Selection, dataset: DSVArray) {
   const svg = root.append("svg")
     .attr("viewBox", [0, 0, width, height])
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .attr("color", "black");
 
   // 背景
   svg
@@ -67,15 +65,20 @@ export function scatterGraph(root: D3Selection, dataset: DSVArray) {
   svg
     .append('g')
     .attr('transform', `translate(0, ${height - margin.bottom})`)
-    .call(xAxis);
+    .call(xAxis)
 
   svg
+    .append('g')
     .selectAll("circle")
     .data(dataset)
     .join("circle")
     .attr("cx", (d) => xScale(d.x))
+    .attr("cy", (d) => yScale(0))
+    .attr("r", 2)
+    .transition()
+    .duration(1000)
+    .delay((d, i) => i * 100)
     .attr("cy", (d) => yScale(d.y))
-    .attr("r", 2);
 
   return svg.node();
 }
