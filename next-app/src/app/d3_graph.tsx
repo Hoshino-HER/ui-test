@@ -9,7 +9,7 @@ interface IProps {
 
 type D3Selection = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 
-function barGraph(root: D3Selection, data: number[]) {
+function barGraph(root: D3Selection, dataset: number[]) {
 
   const old = root.select("svg");
   old.remove();
@@ -20,7 +20,30 @@ function barGraph(root: D3Selection, data: number[]) {
   const svg = root.append("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("viewBox", [0, 0, 100, 100]);
+    .attr("viewBox", [0, 0, width, height]);
+
+  // 背景
+  svg
+    .append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("fill", "#004");
+
+  // 棒グラフ
+  const rects = svg.append('g').selectAll('rect.bar')
+    .data(dataset)
+    .join('rect')
+    .attr("class", "bar");
+
+  rects
+    .attr('x', (d, i) => i * 50)
+    .attr('y', (d) => height - d)
+    .attr('width', 40)
+    .attr('height', (d) => d)
+    .attr("fill", "yellow")
+    .attr("stroke", "orange")
+    .attr("stroke-width", (d) => d / 4)
+    .attr("stroke-opacity", 0.5);
 
   svg
     .append("circle")
@@ -30,6 +53,7 @@ function barGraph(root: D3Selection, data: number[]) {
     .attr("fill", "yellow")
     .attr("stroke", "orange")
     .attr("stroke-width", 2);
+
   return svg.node();
 }
 
