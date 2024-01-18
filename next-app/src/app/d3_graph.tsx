@@ -41,7 +41,13 @@ function barGraph(root: D3Selection, dataset: number[]) {
     .attr('y', (d) => height - (d / d3.max(dataset)) * height)
     .attr('width', width / dataset.length - barPadding)
     .attr('height', (d) => (d / d3.max(dataset)) * height)
-    .attr('fill', '#800');
+    .attr('fill', '#800')
+    .on("mouseenter", function (event) {
+      d3.select(this).attr("fill", "yellow");
+    })
+    .on("mouseleave", function (event) {
+      d3.select(this).attr("fill", "#800");
+    });
 
   svg
     .append("circle")
