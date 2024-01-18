@@ -16,6 +16,7 @@ function barGraph(root: D3Selection, dataset: number[]) {
 
   const width = 400;
   const height = 100;
+  const barPadding = 1;
 
   const svg = root.append("svg")
     .attr("width", width)
@@ -27,7 +28,7 @@ function barGraph(root: D3Selection, dataset: number[]) {
     .append("rect")
     .attr("width", width)
     .attr("height", height)
-    .attr("fill", "#004");
+    .attr("fill", "#AFF");
 
   // 棒グラフ
   const rects = svg.append('g').selectAll('rect.bar')
@@ -36,14 +37,11 @@ function barGraph(root: D3Selection, dataset: number[]) {
     .attr("class", "bar");
 
   rects
-    .attr('x', (d, i) => i * 50)
-    .attr('y', (d) => height - d)
-    .attr('width', 40)
-    .attr('height', (d) => d)
-    .attr("fill", "yellow")
-    .attr("stroke", "orange")
-    .attr("stroke-width", (d) => d / 4)
-    .attr("stroke-opacity", 0.5);
+    .attr('x', (d, i) => i * (width / dataset.length))
+    .attr('y', (d) => height - (d / d3.max(dataset)) * height)
+    .attr('width', width / dataset.length - barPadding)
+    .attr('height', (d) => (d / d3.max(dataset)) * height)
+    .attr('fill', '#800');
 
   svg
     .append("circle")
@@ -63,9 +61,10 @@ export const MyD3Graph = (props: IProps) => {
 
   useEffect(
     () => {
-      if (props.data && d3Container.current) {
+      if (d3Container.current) {
+        const dataset = d3.shuffle(d3.range(40, 200, 10));
         const root = d3.select(d3Container.current);
-        barGraph(root, props.data);
+        barGraph(root, dataset);
       }
     },
 
