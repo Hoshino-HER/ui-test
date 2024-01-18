@@ -1,4 +1,4 @@
-import { MyD3Graph } from "./d3_graph";
+import { MyD3Graph } from "@/components/d3Graph";
 
 export default function Home() {
   return (

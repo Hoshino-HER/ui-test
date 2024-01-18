@@ -1,15 +1,8 @@
-'use client';
-
-import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-
-interface IProps {
-  data?: number[];
-}
 
 type D3Selection = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 
-function barGraph(root: D3Selection, dataset: Array<number>) {
+export function barGraph(root: D3Selection, dataset: Array<number>) {
 
   const maxnum = d3.max(dataset);
   if (maxnum === undefined) {
@@ -121,36 +114,4 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     .attr("stroke-width", 2);
 
   return svg.node();
-}
-
-/* Component */
-export const MyD3Graph = (props: IProps) => {
-  const d3Container = useRef(null);
-
-  useEffect(
-    () => {
-      if (d3Container.current) {
-        const dataset = d3.shuffle(d3.range(40, 200, 10));
-        const root = d3.select(d3Container.current);
-        barGraph(root, dataset);
-      }
-    },
-
-    /*
-        useEffect has a dependency array (below). It's a list of dependency
-        variables for this useEffect block. The block will run after mount
-        and whenever any of these variables change. We still have to check
-        if the variables are valid, but we do not have to compare old props
-        to next props to decide whether to rerender.
-    */
-    [props.data, d3Container.current])
-
-  return (
-    <svg
-      className="d3-component"
-      width={400}
-      height={200}
-      ref={d3Container}
-    />
-  );
 }
