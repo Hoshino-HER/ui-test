@@ -20,9 +20,8 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
   old.remove();
 
   const width = 400;
-  const height = 100;
-  const barPadding = 1;
-  const margin = { top: 8, right: 8, bottom: 8, left: 8 };
+  const height = 200;
+  const margin = { top: 10, right: 10, bottom: 20, left: 30 };
 
   const svg = root.append("svg")
     .attr("width", width)
@@ -36,12 +35,6 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     .attr("height", height)
     .attr("fill", "#AFF");
 
-  // 棒グラフ
-  const rects = svg.append('g').selectAll('rect.bar')
-    .data(dataset)
-    .join('rect')
-    .attr("class", "bar");
-
   // スケール設定
   const yScale = d3
     .scaleLinear()
@@ -52,6 +45,24 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     .domain(dataset)
     .range([margin.left, width - margin.right])
     .padding(0.1);
+
+  // 軸の設定
+  const xAxis = d3
+    .axisBottom(xScale)
+    .tickSize(0)
+    .tickSizeOuter(10)
+    .tickFormat((d, i) => `${i + 1}番`);
+  const yAxis = d3
+    .axisLeft(yScale)
+    .tickSize(-width + margin.left + margin.right)
+    .tickSizeOuter(0);
+
+  // 棒グラフ
+  const rects = svg.append('g')
+    .selectAll('rect.bar')
+    .data(dataset)
+    .join('rect')
+    .attr("class", "bar")
 
   rects
     .attr('x', xScale)
@@ -67,6 +78,17 @@ function barGraph(root: D3Selection, dataset: Array<number>) {
     });
 
   svg
+    .append('g')
+    .attr('transform', `translate(${margin.left}, 0)`)
+    .call(yAxis);
+
+  svg
+    .append('g')
+    .attr('transform', `translate(0, ${height - margin.bottom})`)
+    .call(xAxis);
+
+  svg
+    .append('g')
     .selectAll('text')
     .data(dataset)
     .join('text')
