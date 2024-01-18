@@ -11,6 +11,11 @@ type D3Selection = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 
 function barGraph(root: D3Selection, dataset: number[]) {
 
+  const maxnum = d3.max(dataset) as number;
+  if (maxnum === undefined) {
+    return;
+  }
+
   const old = root.select("svg");
   old.remove();
 
@@ -38,9 +43,9 @@ function barGraph(root: D3Selection, dataset: number[]) {
 
   rects
     .attr('x', (d, i) => i * (width / dataset.length))
-    .attr('y', (d) => height - (d / d3.max(dataset)) * height)
+    .attr('y', (d) => height - (d / maxnum) * height)
     .attr('width', width / dataset.length - barPadding)
-    .attr('height', (d) => (d / d3.max(dataset)) * height)
+    .attr('height', (d) => (d / maxnum) * height)
     .attr('fill', '#800')
     .on("mouseenter", function (event) {
       d3.select(this).attr("fill", "yellow");
