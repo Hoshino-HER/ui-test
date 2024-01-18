@@ -1,8 +1,8 @@
-import { MyD3Component } from "./d3_sample"
+import { MyD3Graph } from "./d3_graph";
 
 export default function Home() {
   return (
-    <MyD3Component data={[1,2,3]}
+    <MyD3Graph data={[1,2,3]}
     />
   )
 }
