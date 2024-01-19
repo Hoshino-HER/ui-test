@@ -9,7 +9,7 @@ interface IScatterData {
 }
 type DSVArray = d3.DSVParsedArray<IScatterData>;
 
-export function scatterGraph(root: D3Selection, dataset: DSVArray) {
+export function scatterGraph(bg: HTMLElement, dataset: DSVArray) {
   const [minX, maxX] = d3.extent(dataset, d => d.x);
   const [minY, maxY] = d3.extent(dataset, d => d.y);
   const [minZ, maxZ] = d3.extent(dataset, d => d.z);
@@ -17,11 +17,14 @@ export function scatterGraph(root: D3Selection, dataset: DSVArray) {
     return;
   }
 
-  const old = root.select("svg");
+  const root = d3.select(bg);
+  const bgRect = bg.getBoundingClientRect();
+
+  const old = root.selectAll("svg");
   old.remove();
 
-  const width = 200;
-  const height = 200;
+  const width = bgRect.width;
+  const height = bgRect.height < 200 ? 200 : bgRect.height;
   const margin = { top: 10, right: 10, bottom: 20, left: 30 };
 
   const svg = root.append("svg")

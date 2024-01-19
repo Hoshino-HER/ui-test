@@ -11,29 +11,26 @@ interface IProps {
 
 /* Component */
 export const MyD3Graph = (props: IProps) => {
-  const d3Container = useRef(null);
+  const d3Container = useRef<HTMLDivElement>(null);
 
-  useEffect( () => {
+  useEffect(() => {
     const data = async () => {
       if (d3Container.current) {
-        const root = d3.select(d3Container.current);
 
         const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRgABhzZkXwZihskMCzNWKcL5lqRwyHRF-bygd7uxZ1rq7DbgcZXpSLClyh9FPJlw_JroNhDK73QUq-/pub?gid=0&single=true&output=tsv";
         const dataset = await d3.tsv(url, d3.autoType)
 
-        scatterGraph(root, dataset);
+        scatterGraph(d3Container.current, dataset);
       }
     }
     data();
-  },
-
-    [props.data, d3Container.current])
+  }, [props.data])
 
   return (
-    <svg
+    <div
+      // width={800}
+      // height={800}
       className="d3-component"
-      width={400}
-      height={200}
       ref={d3Container}
     />
   );
