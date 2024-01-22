@@ -1,3 +1,4 @@
+import exp from 'constants';
 import * as d3 from 'd3';
 
 export type Scene = {
@@ -9,11 +10,41 @@ export type Frame = {
   time: number;
   scene: Scene;
 }
-
 export type Story = {
   name: string;
   sequence: Array<Frame>;
 }
+
+export type DrawPoint<T> = {
+  val: T;
+  time: number;
+}
+export type DrawLine<T> = DrawPoint<T>[];
+
+
+export function getDeviceDrawLine<T>(story: Story, device: string | null = null): DrawLine<T> {
+  const drawLine: DrawLine<T> = [];
+  let prev: DrawPoint<T> | null = null;
+
+  for (const frame of story.sequence) {
+    if (device !== null && frame.scene.device !== device) {
+      continue;
+    }
+
+    if (prev === null) {
+      prev = { val: frame.scene.val as T, time: frame.time };
+      drawLine.push(prev);
+    } else if (prev.val !== frame.scene.val) {
+      prev = { val: prev.val as T, time: frame.time };
+      drawLine.push(prev);
+      prev = { val: frame.scene.val as T, time: frame.time };
+      drawLine.push(prev);
+    }
+  }
+
+  return drawLine;
+}
+
 
 export function drawSequenceDiagram(
   bg: SVGSVGElement, name: string, story: Story, currentTime: number = 0

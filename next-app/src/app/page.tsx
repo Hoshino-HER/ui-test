@@ -1,21 +1,27 @@
 import { MyD3Graph } from "@/components/d3Graph";
-import SequenceDiagram from "@/components/SequenceDiagram";
+import { Story } from '@/utils/drawSequenceDiagram';
+import RechartSample from "@/components/RechartsSample";
+
+const story: Story = {
+  name: "Story A",
+  sequence: [
+    { time: 0, scene: { device: "Lamp-A", val: false } },
+    { time: 1000, scene: { device: "Lamp-A", val: true } },
+    { time: 2000, scene: { device: "Lamp-A", val: false } }
+  ]
+};
 
 export default function Home() {
   return (
-    <div>
+    <div style={{ width: '100%', height: '250px' }}>
+      Recharts Sample
+      <RechartSample story={story}/>
       {/* <MyD3Graph /> */}
-      <SequenceDiagram
+      {/* <SequenceDiagram
         name="Device"
         story={{
-          name: "Story A",
-          sequence: [
-            { time: 0, scene: { device: "Lamp-A", val: false } },
-            { time: 1000, scene: { device: "Lamp-A", val: true } },
-            { time: 2000, scene: { device: "Lamp-A", val: false } }
-          ]
         }}
-      />
+      /> */}
     </div>
   )
 }
