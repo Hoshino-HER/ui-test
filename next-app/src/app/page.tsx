@@ -1,6 +1,6 @@
 import { MyD3Graph } from "@/components/d3Graph";
 import { Story } from '@/utils/drawSequenceDiagram';
-import RechartSample from "@/components/RechartsSample";
+import VictorySample from "@/components/VictorySample";
 
 const story: Story = {
   name: "Story A",
@@ -14,14 +14,8 @@ const story: Story = {
 export default function Home() {
   return (
     <div style={{ width: '100%', height: '250px', backgroundColor: "white" }}>
-      Recharts Sample
-      <RechartSample story={story}/>
-      {/* <MyD3Graph /> */}
-      {/* <SequenceDiagram
-        name="Device"
-        story={{
-        }}
-      /> */}
+      Victory Sample
+      <VictorySample story={story}/>
     </div>
   )
 }
