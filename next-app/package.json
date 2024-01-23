@@ -15,7 +15,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-scripts": "^5.0.1",
-    "recharts": "^2.10.4"
+    "recharts": "^2.10.4",
+    "victory": "^36.8.2"
   },
   "devDependencies": {
     "@types/node": "^20",
