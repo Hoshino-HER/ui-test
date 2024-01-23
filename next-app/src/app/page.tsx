@@ -13,7 +13,7 @@ const story: Story = {
 
 export default function Home() {
   return (
-    <div style={{ width: '100%', height: '250px' }}>
+    <div style={{ width: '100%', height: '250px', backgroundColor: "white" }}>
       Recharts Sample
       <RechartSample story={story}/>
       {/* <MyD3Graph /> */}
