@@ -13,9 +13,14 @@ const story: Story = {
 
 export default function Home() {
   return (
-    <div style={{ width: '100%', height: '250px', backgroundColor: "white" }}>
+    <div style={{ position: 'relative', width: '100%', height: '300px' }}>
       Victory Sample
-      <VictorySample story={story}/>
+      <div style={{ position: 'absolute', top: '0px', width: '100%', height: '80%' }}>
+        <VictorySample story={story} />
+      </div>
+      <div style={{ position: 'absolute', top: '50px', width: '100%', height: '80%' }}>
+        <VictorySample story={story} />
+      </div>
     </div>
   )
 }
