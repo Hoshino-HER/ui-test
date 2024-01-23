@@ -32,12 +32,12 @@ export function getDeviceDrawLine<T>(story: Story, device: string | null = null)
     }
 
     if (prev === null) {
-      prev = { val: frame.scene.val as T, time: frame.time };
+      prev = { val: frame.scene.val.toString() as T, time: frame.time };
       drawLine.push(prev);
     } else if (prev.val !== frame.scene.val) {
       prev = { val: prev.val as T, time: frame.time };
       drawLine.push(prev);
-      prev = { val: frame.scene.val as T, time: frame.time };
+      prev = { val: frame.scene.val.toString() as T, time: frame.time };
       drawLine.push(prev);
     }
   }
