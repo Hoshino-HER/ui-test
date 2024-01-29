@@ -1,6 +1,5 @@
-import { MyD3Graph } from "@/components/d3Graph";
 import { Story } from '@/utils/drawSequenceDiagram';
-import VictorySample from "@/components/VictorySample";
+import VisxSample from "@/components/VisxSample";
 
 const story: Story = {
   name: "Story A",
@@ -14,13 +13,10 @@ const story: Story = {
 export default function Home() {
   return (
     <div style={{ position: 'relative', width: '100%', height: '300px' }}>
-      Victory Sample
-      <div style={{ position: 'absolute', top: '0px', width: '100%', height: '80%' }}>
-        <VictorySample story={story} />
-      </div>
-      <div style={{ position: 'absolute', top: '50px', width: '100%', height: '80%' }}>
-        <VictorySample story={story} />
-      </div>
+      Visx Sample
+      <svg>
+        <VisxSample story={story} />
+      </svg>
     </div>
   )
 }
