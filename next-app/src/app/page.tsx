@@ -12,11 +12,9 @@ const story: Story = {
 
 export default function Home() {
   return (
-    <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+    <div style={{ position: 'relative', width: '100%', height: '300px', background: 'white' }}>
       Visx Sample
-      <svg>
-        <VisxSample story={story} />
-      </svg>
+      <VisxSample story={story} />
     </div>
   )
 }
