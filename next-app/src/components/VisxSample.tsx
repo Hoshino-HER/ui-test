@@ -14,8 +14,10 @@ interface IProps extends React.SVGProps<SVGSVGElement> {
 }
 
 const yScale = scaleBand({
-  range: [0, 100],
-  domain: ["false", "true"],
+  range: [20, 100],
+  domain: ["true", "false"],
+  round: false,
+  padding: 0.2,
 })
 
 const xScale = scaleLinear({
@@ -26,22 +28,23 @@ const xScale = scaleLinear({
 
 const axisLeftProps = {
   left: 60,
-  top: 0,
+  top: (0 - ((yScale.bandwidth() ?? 0) / 2)),
   hideTicks: false,
   numTicks: 2,
   scale: yScale,
   label: "Value",
-  rangePadding: 10
+  rangePadding: 10,
 };
 
 const axisBottomProps = {
   left: 0,
-  top: 0,
+  top: 90,
   hideTicks: false,
   numTicks: 6,
   scale: xScale,
   label: "Time [ms]",
-  rangePadding: 10
+  tickLength: 5,
+  rangePadding: 50,
 };
 
 export default function VisxSample(props: IProps) {
@@ -67,6 +70,16 @@ export default function VisxSample(props: IProps) {
         key={i} x={0} y={i * 7 + 80}
         width={100} height={100} verticalAnchor="start">
         {`${line.time} ${line.val} ${yScale(line.val.toString())}`}
-      </Text>)}
+      </Text>)
+    }
+    <Text
+      fontSize={20}
+      // key={i} x={ line.search(/\S|$/) * 5} y={i * 7 + 50} 
+      x="10" y="5"
+      width={200} height={100} verticalAnchor="start"
+      stroke='red' fill='red'
+    >
+      {`yScale: ${yScale.bandwidth().toFixed(1)}, ${yScale.step().toFixed(1)}`}
+    </Text>
   </>;
 }
