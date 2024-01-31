@@ -62,8 +62,8 @@ const gridColumnProps = {
   scale: xScale,
   numTicks: 6,
   round: true,
-  height: 100,
 }
+
 const gridRowsProps = {
   left: 60,
   top: (0 - ((yScale.bandwidth() ?? 0) / 2)),
@@ -73,13 +73,10 @@ const gridRowsProps = {
   scale: yScale
 }
 
-// or
-// import * as Grid from '@visx/grid';
-// <Grid.Grid />
 
 export default function VisxSample(props: IPropsVisxSample) {
   return <ParentSize>
-      {({ width, height }) => <VisxSampleClient {...props} width={width} height={height} />}
+    {({ width, height }) => <VisxSampleClient {...props} width={width} height={height} />}
   </ParentSize>
 }
 
@@ -114,8 +111,8 @@ function VisxSampleClient(props: IPropsVisxSampleClient) {
         key={i} x={0} y={i * 7 + 80}
         width={300} height={100} verticalAnchor="start">
         {`${line.time} ${line.val} ${yScale(line.val.toString())?.toFixed(1)}`}
-      </Text>)
-    }
+      </Text>
+    )}
     <Text
       fontSize={20}
       // key={i} x={ line.search(/\S|$/) * 5} y={i * 7 + 50} 
