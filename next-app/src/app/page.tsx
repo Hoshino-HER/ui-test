@@ -1,5 +1,7 @@
+'use client';
 import { Story } from '@/utils/drawSequenceDiagram';
-import VisxSample from "@/components/VisxSample";
+import Example from '@/components/Example';
+import ParentSize from '@visx/responsive/lib/components/ParentSize';
 
 const story: Story = {
   name: "Story A",
@@ -12,9 +14,9 @@ const story: Story = {
 
 export default function Home() {
   return (
-    <div style={{ position: 'relative', width: '100%', height: '300px', background: 'white' }}>
+    <div style={{ position: 'relative', width: '95%', height: '500px', background: 'white' }}>
       Visx Sample
-      <VisxSample story={story} />
+      <ParentSize>{({ width, height }) => <Example compact={false} width={width} height={height} />}</ParentSize>
     </div>
   )
 }
