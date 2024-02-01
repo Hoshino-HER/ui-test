@@ -12,6 +12,7 @@
     "@types/d3": "^7.4.3",
     "@visx/axis": "^3.8.0",
     "@visx/brush": "^3.6.1",
+    "@visx/gradient": "^3.3.0",
     "@visx/grid": "^3.5.0",
     "@visx/pattern": "^3.3.0",
     "@visx/responsive": "^3.3.0",
